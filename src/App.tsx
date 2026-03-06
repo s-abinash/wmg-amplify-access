@@ -1,22 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Volume2, 
-  Eye, 
-  Ear, 
-  Mic2, 
-  BookOpen, 
-  ChevronRight, 
-  Sparkles, 
-  Settings, 
-  Play, 
+import {
+  Volume2,
+  Eye,
+  Ear,
+  Mic2,
+  BookOpen,
+  ChevronRight,
+  Sparkles,
+  Settings,
+  Play,
   Activity,
   Heart,
   Music,
   User,
   ArrowRight,
   CheckCircle2,
-  Info
+  Info,
+  Shield
 } from 'lucide-react';
 
 // --- Types ---
@@ -114,21 +115,27 @@ const Onboarding = ({ onComplete }: { onComplete: (profile: UserProfile) => void
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F2ED] p-6 md:p-12 font-sans">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-[#0a0a0a] p-6 md:p-12 font-sans relative overflow-hidden">
+      {/* Atmospheric background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
         <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold text-zinc-900 mb-4">Accessibility Setup</h2>
-          <p className="text-zinc-500">Configure your personal adaptation layer.</p>
+          <h2 className="text-3xl font-bold text-white mb-4">Accessibility Setup</h2>
+          <p className="text-zinc-400">Configure your personal adaptation layer.</p>
         </div>
 
         <div className="space-y-8">
           {/* Hearing Mode */}
-          <div className="bg-white p-8 rounded-[32px] border border-black/5 shadow-sm">
+          <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[32px] border border-white/10 shadow-2xl">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center">
-                <Ear className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-blue-500/20 rounded-2xl flex items-center justify-center">
+                <Ear className="w-6 h-6 text-blue-400" />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900">Hearing Mode</h3>
+              <h3 className="text-xl font-bold text-white">Hearing Mode</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {['Standard', 'Enhanced Bass', 'Reduced Sensory', 'Haptic Mode'].map((opt) => (
@@ -137,8 +144,8 @@ const Onboarding = ({ onComplete }: { onComplete: (profile: UserProfile) => void
                   onClick={() => setProfile(p => ({ ...p, needs: p.needs.includes(opt) ? p.needs.filter(n => n !== opt) : [...p.needs, opt] }))}
                   className={`p-4 rounded-2xl border text-sm font-bold transition-all text-left ${
                     profile.needs.includes(opt)
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
-                    : 'bg-zinc-50 text-zinc-600 border-black/5 hover:border-blue-500/30'
+                    ? 'bg-blue-500 text-white border-blue-500 shadow-lg shadow-blue-500/20'
+                    : 'bg-white/5 text-zinc-400 border-white/10 hover:border-blue-500/50 hover:bg-white/10'
                   }`}
                 >
                   {opt}
@@ -148,12 +155,12 @@ const Onboarding = ({ onComplete }: { onComplete: (profile: UserProfile) => void
           </div>
 
           {/* Language Mode */}
-          <div className="bg-white p-8 rounded-[32px] border border-black/5 shadow-sm">
+          <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[32px] border border-white/10 shadow-2xl">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-rose-600" />
+              <div className="w-12 h-12 bg-rose-500/20 rounded-2xl flex items-center justify-center">
+                <BookOpen className="w-6 h-6 text-rose-400" />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900">Language Mode</h3>
+              <h3 className="text-xl font-bold text-white">Language Mode</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {['Original', 'Emotion Translation', 'Singable Localization', 'Dual Lyrics View'].map((opt) => (
@@ -162,8 +169,8 @@ const Onboarding = ({ onComplete }: { onComplete: (profile: UserProfile) => void
                   onClick={() => setProfile(p => ({ ...p, needs: p.needs.includes(opt) ? p.needs.filter(n => n !== opt) : [...p.needs, opt] }))}
                   className={`p-4 rounded-2xl border text-sm font-bold transition-all text-left ${
                     profile.needs.includes(opt)
-                    ? 'bg-rose-600 text-white border-rose-600 shadow-lg'
-                    : 'bg-zinc-50 text-zinc-600 border-black/5 hover:border-rose-500/30'
+                    ? 'bg-rose-500 text-white border-rose-500 shadow-lg shadow-rose-500/20'
+                    : 'bg-white/5 text-zinc-400 border-white/10 hover:border-rose-500/50 hover:bg-white/10'
                   }`}
                 >
                   {opt}
@@ -173,12 +180,12 @@ const Onboarding = ({ onComplete }: { onComplete: (profile: UserProfile) => void
           </div>
 
           {/* Cognitive Mode */}
-          <div className="bg-white p-8 rounded-[32px] border border-black/5 shadow-sm">
+          <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[32px] border border-white/10 shadow-2xl">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-emerald-600" />
+              <div className="w-12 h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center">
+                <Sparkles className="w-6 h-6 text-emerald-400" />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900">Cognitive Mode</h3>
+              <h3 className="text-xl font-bold text-white">Cognitive Mode</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {['Focus Mode', 'Calm Mode', 'Simplified Lyrics'].map((opt) => (
@@ -187,8 +194,8 @@ const Onboarding = ({ onComplete }: { onComplete: (profile: UserProfile) => void
                   onClick={() => setProfile(p => ({ ...p, needs: p.needs.includes(opt) ? p.needs.filter(n => n !== opt) : [...p.needs, opt] }))}
                   className={`p-4 rounded-2xl border text-sm font-bold transition-all text-left ${
                     profile.needs.includes(opt)
-                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg'
-                    : 'bg-zinc-50 text-zinc-600 border-black/5 hover:border-emerald-500/30'
+                    ? 'bg-emerald-500 text-white border-emerald-500 shadow-lg shadow-emerald-500/20'
+                    : 'bg-white/5 text-zinc-400 border-white/10 hover:border-emerald-500/50 hover:bg-white/10'
                   }`}
                 >
                   {opt}
@@ -199,9 +206,9 @@ const Onboarding = ({ onComplete }: { onComplete: (profile: UserProfile) => void
         </div>
 
         <div className="mt-12 flex justify-end">
-          <button 
+          <button
             onClick={handleComplete}
-            className="px-8 py-4 bg-zinc-900 text-white rounded-2xl font-bold text-lg hover:bg-zinc-800 transition-all shadow-xl flex items-center gap-2"
+            className="px-8 py-4 bg-white text-zinc-900 rounded-2xl font-bold text-lg hover:bg-zinc-100 transition-all shadow-xl flex items-center gap-2"
           >
             Create Profile & Enter <ArrowRight className="w-5 h-5" />
           </button>
@@ -213,11 +220,11 @@ const Onboarding = ({ onComplete }: { onComplete: (profile: UserProfile) => void
 
 const ModuleCard = ({ title, icon: Icon, description, color, onClick, active }: any) => {
   const colorClasses: Record<string, string> = {
-    emerald: 'bg-emerald-50 text-emerald-600 border-emerald-500 ring-emerald-500/20',
-    blue: 'bg-blue-50 text-blue-600 border-blue-500 ring-blue-500/20',
-    orange: 'bg-orange-50 text-orange-600 border-orange-500 ring-orange-500/20',
-    purple: 'bg-purple-50 text-purple-600 border-purple-500 ring-purple-500/20',
-    rose: 'bg-rose-50 text-rose-600 border-rose-500 ring-rose-500/20',
+    emerald: 'bg-emerald-500/20 text-emerald-400 border-emerald-500 ring-emerald-500/20',
+    blue: 'bg-blue-500/20 text-blue-400 border-blue-500 ring-blue-500/20',
+    orange: 'bg-orange-500/20 text-orange-400 border-orange-500 ring-orange-500/20',
+    purple: 'bg-purple-500/20 text-purple-400 border-purple-500 ring-purple-500/20',
+    rose: 'bg-rose-500/20 text-rose-400 border-rose-500 ring-rose-500/20',
   };
 
   return (
@@ -226,16 +233,16 @@ const ModuleCard = ({ title, icon: Icon, description, color, onClick, active }: 
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className={`relative p-6 rounded-3xl border text-left transition-all duration-300 ${
-        active 
-        ? `bg-white ${colorClasses[color].split(' ').slice(2).join(' ')} shadow-lg ring-2` 
-        : 'bg-white border-black/5 hover:border-black/10 shadow-sm'
+        active
+        ? `bg-white/10 backdrop-blur-xl ${colorClasses[color].split(' ').slice(2).join(' ')} shadow-2xl shadow-${color}-500/20 ring-2`
+        : 'bg-white/5 backdrop-blur-xl border-white/10 hover:border-white/20 shadow-xl'
       }`}
     >
       <div className={`w-12 h-12 rounded-2xl ${colorClasses[color].split(' ').slice(0, 2).join(' ')} flex items-center justify-center mb-4`}>
         <Icon className="w-6 h-6" />
       </div>
-      <h3 className="font-bold text-zinc-900 mb-2">{title}</h3>
-      <p className="text-sm text-zinc-500 leading-relaxed">{description}</p>
+      <h3 className="font-bold text-white mb-2">{title}</h3>
+      <p className="text-sm text-zinc-400 leading-relaxed">{description}</p>
       {active && (
         <div className="absolute top-4 right-4">
           <CheckCircle2 className={`w-5 h-5 ${colorClasses[color].split(' ')[1]}`} />
@@ -796,27 +803,27 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 bg-[#F5F2ED] z-50 overflow-y-auto"
+      className="fixed inset-0 bg-[#0a0a0a] z-50 overflow-y-auto"
     >
       <div className="max-w-5xl mx-auto p-6 lg:p-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-          <button 
+          <button
             onClick={onBack}
-            className="flex items-center gap-2 text-zinc-500 hover:text-zinc-900 transition-colors font-bold uppercase tracking-widest text-xs"
+            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors font-bold uppercase tracking-widest text-xs"
           >
             <ArrowRight className="w-4 h-4 rotate-180" /> Back to Dashboard
           </button>
-          
-          <div className="flex items-center gap-4 bg-white px-6 py-3 rounded-2xl border border-black/5 shadow-sm">
+
+          <div className="flex items-center gap-4 bg-white/10 backdrop-blur-xl px-6 py-3 rounded-2xl border border-white/10 shadow-xl">
             <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0">
               <img src={selectedSong.image} alt={selectedSong.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
             </div>
             <div>
-              <p className="text-xs font-bold text-zinc-900 leading-none">{selectedSong.title}</p>
-              <p className="text-[10px] text-zinc-500 mt-1 leading-none">{selectedSong.artist}</p>
+              <p className="text-xs font-bold text-white leading-none">{selectedSong.title}</p>
+              <p className="text-[10px] text-zinc-400 mt-1 leading-none">{selectedSong.artist}</p>
             </div>
           </div>
         </div>
@@ -824,9 +831,9 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-8">
             {/* Main Visualizer / Interface */}
-            <div className="aspect-video bg-zinc-900 rounded-[40px] shadow-2xl relative overflow-hidden flex items-center justify-center border-8 border-white">
+            <div className="aspect-video bg-zinc-950 rounded-[40px] shadow-2xl relative overflow-hidden flex items-center justify-center border-4 border-white/10">
               {renderVisualizer()}
-              
+
               {/* Overlay Controls */}
               {isPlaying && (
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-white/10 backdrop-blur-md p-2 rounded-2xl border border-white/10">
@@ -838,17 +845,17 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 bg-white rounded-3xl border border-black/5 shadow-sm">
-                <h4 className="font-bold text-zinc-900 mb-4">Adaptation Modes</h4>
+              <div className="p-6 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 shadow-xl">
+                <h4 className="font-bold text-white mb-4">Adaptation Modes</h4>
                 <div className="grid grid-cols-1 gap-2">
                   {getModes().map(m => (
-                    <button 
+                    <button
                       key={m}
                       onClick={() => setMode(m)}
                       className={`p-4 rounded-2xl text-left text-sm font-bold transition-all ${
-                        mode === m 
-                        ? `${activeColor.split(' ')[0]} text-white shadow-lg` 
-                        : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
+                        mode === m
+                        ? `${activeColor.split(' ')[0]} text-white shadow-lg`
+                        : 'bg-white/5 text-zinc-400 hover:bg-white/10'
                       }`}
                     >
                       {m}
@@ -856,8 +863,8 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
                   ))}
                 </div>
               </div>
-              <div className="p-6 bg-white rounded-3xl border border-black/5 shadow-sm">
-                <h4 className="font-bold text-zinc-900 mb-4">Real-time Metrics</h4>
+              <div className="p-6 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 shadow-xl">
+                <h4 className="font-bold text-white mb-4">Real-time Metrics</h4>
                 <div className="space-y-4">
                   {[
                     { label: 'Sensory Load', value: isPlaying ? '12%' : '0%', color: 'emerald' },
@@ -869,8 +876,8 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
                         <span>{stat.label}</span>
                         <span>{stat.value}</span>
                       </div>
-                      <div className="h-1.5 bg-zinc-100 rounded-full overflow-hidden">
-                        <motion.div 
+                      <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: isPlaying ? '70%' : '0%' }}
                           className={`h-full bg-${stat.color}-500`}
@@ -884,13 +891,13 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
           </div>
 
           <div className="space-y-8">
-            <div className="p-8 bg-zinc-900 rounded-[40px] text-white">
+            <div className="p-8 bg-zinc-900/80 backdrop-blur-xl rounded-[40px] border border-white/10 text-white shadow-2xl">
               <h4 className="font-bold text-lg mb-6 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-emerald-400" /> AI Insights
               </h4>
               <div className="space-y-6">
                 <AnimatePresence mode="wait">
-                  <motion.div 
+                  <motion.div
                     key={insightIndex}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -901,7 +908,7 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
                       {isPlaying ? 'Live Analysis' : 'Pre-Session Analysis'}
                     </p>
                     <p className="text-sm leading-relaxed text-zinc-300 italic">
-                      {isPlaying 
+                      {isPlaying
                         ? (moduleInsights[module.id]?.[insightIndex] || "Analyzing stems...")
                         : "Initialize session to begin real-time accessibility adaptation."
                       }
@@ -916,27 +923,27 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
               </div>
             </div>
 
-            <div className="p-8 bg-white rounded-[40px] border border-black/5 shadow-sm">
-              <h4 className="font-bold text-zinc-900 mb-6">Module Documentation</h4>
+            <div className="p-8 bg-white/5 backdrop-blur-xl rounded-[40px] border border-white/10 shadow-xl">
+              <h4 className="font-bold text-white mb-6">Module Documentation</h4>
               <div className="space-y-4">
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-zinc-100 rounded-xl flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
                     <Info className="w-5 h-5 text-zinc-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-zinc-900">How it works</p>
-                    <p className="text-xs text-zinc-500 leading-relaxed mt-1">
+                    <p className="text-sm font-bold text-white">How it works</p>
+                    <p className="text-xs text-zinc-400 leading-relaxed mt-1">
                       Our core engine separates the track into 4 stems (Vocals, Drums, Bass, Other) using Demucs v4.
                     </p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-zinc-100 rounded-xl flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
                     <Settings className="w-5 h-5 text-zinc-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-zinc-900">Customization</p>
-                    <p className="text-xs text-zinc-500 leading-relaxed mt-1">
+                    <p className="text-sm font-bold text-white">Customization</p>
+                    <p className="text-xs text-zinc-400 leading-relaxed mt-1">
                       Adjust your profile settings anytime to refine the AI adaptation layer.
                     </p>
                   </div>
@@ -945,9 +952,9 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
             </div>
 
             {/* Interactive Feedback UI */}
-            <div className="p-8 bg-white rounded-[40px] border border-black/5 shadow-sm">
-              <h4 className="font-bold text-zinc-900 mb-6">Quick Feedback</h4>
-              <p className="text-xs text-zinc-500 mb-4">How comfortable is this adaptation?</p>
+            <div className="p-8 bg-white/5 backdrop-blur-xl rounded-[40px] border border-white/10 shadow-xl">
+              <h4 className="font-bold text-white mb-6">Quick Feedback</h4>
+              <p className="text-xs text-zinc-400 mb-4">How comfortable is this adaptation?</p>
               <div className="flex justify-between gap-2">
                 {[
                   { emoji: '😣', label: 'Too Intense', value: 'intense' },
@@ -963,21 +970,21 @@ const ModuleExperience = ({ module, profile, onBack, selectedSong }: { module: a
                       console.log(`Feedback submitted: ${fb.value}`);
                       // Show a quick toast or visual confirmation here if desired
                     }}
-                    className="flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-zinc-50 transition-colors border border-transparent hover:border-black/5 flex-1"
+                    className="flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-white/10 transition-colors border border-transparent hover:border-white/10 flex-1"
                   >
                     <span className="text-2xl">{fb.emoji}</span>
-                    <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider text-center">{fb.label}</span>
+                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider text-center">{fb.label}</span>
                   </button>
                 ))}
               </div>
-              <div className="mt-6 pt-6 border-t border-black/5">
-                <p className="text-xs text-zinc-500 mb-4">Adjust intensity manually:</p>
-                <input 
-                  type="range" 
-                  min="0" 
-                  max="100" 
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <p className="text-xs text-zinc-400 mb-4">Adjust intensity manually:</p>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
                   defaultValue="50"
-                  className={`w-full h-2 bg-zinc-100 rounded-lg appearance-none cursor-pointer accent-${activeColor.split(' ')[0].replace('bg-', '')}`}
+                  className={`w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-${activeColor.split(' ')[0].replace('bg-', '')}`}
                 />
                 <div className="flex justify-between mt-2 text-[10px] font-bold text-zinc-400 uppercase">
                   <span>Less</span>
@@ -1039,39 +1046,45 @@ const Dashboard = ({ profile }: { profile: UserProfile }) => {
   const activeModuleData = modules.find(m => m.id === activeModule);
 
   return (
-    <div className="min-h-screen bg-[#F5F2ED] p-6 lg:p-12 font-sans">
-      <header className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <div className="min-h-screen bg-[#0a0a0a] p-6 lg:p-12 font-sans relative overflow-hidden">
+      {/* Atmospheric background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[150px]" />
+      </div>
+
+      <header className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 relative z-10">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400">Amplify Access Layer Active</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-500">Amplify Access Layer Active</span>
           </div>
-          <h1 className="text-4xl font-bold text-zinc-900 tracking-tight">Welcome back, {profile.name}</h1>
-          <p className="text-zinc-500 mt-2">Your universal accessibility layer is ready. Select a module to begin.</p>
+          <h1 className="text-4xl font-bold text-white tracking-tight">Welcome back, {profile.name}</h1>
+          <p className="text-zinc-400 mt-2">Your universal accessibility layer is ready. Select a module to begin.</p>
         </div>
         <div className="flex gap-4">
-          <button className="p-3 bg-white rounded-2xl border border-black/5 shadow-sm hover:bg-zinc-50 transition-colors">
-            <Settings className="w-5 h-5 text-zinc-600" />
+          <button className="p-3 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl hover:bg-white/20 transition-colors">
+            <Settings className="w-5 h-5 text-zinc-400" />
           </button>
-          <button className="p-3 bg-white rounded-2xl border border-black/5 shadow-sm hover:bg-zinc-50 transition-colors">
-            <User className="w-5 h-5 text-zinc-600" />
+          <button className="p-3 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl hover:bg-white/20 transition-colors">
+            <User className="w-5 h-5 text-zinc-400" />
           </button>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto">
+      <main className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {modules.map((m) => (
-            <ModuleCard 
-              key={m.id} 
-              {...m} 
+            <ModuleCard
+              key={m.id}
+              {...m}
               active={activeModule === m.id}
               onClick={() => setActiveModule(m.id)}
             />
           ))}
-          
+
           {/* Quick Stats / Status Card */}
-          <div className="p-6 rounded-3xl bg-zinc-900 text-white flex flex-col justify-between min-h-[200px]">
+          <div className="p-6 rounded-3xl bg-zinc-900/80 backdrop-blur-xl border border-white/10 text-white flex flex-col justify-between min-h-[200px] shadow-2xl">
             <div>
               <h3 className="font-bold text-lg mb-4">System Status</h3>
               <div className="space-y-3">
@@ -1102,7 +1115,7 @@ const Dashboard = ({ profile }: { profile: UserProfile }) => {
 
         {/* Recommended Tracks */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold text-zinc-900 mb-6 flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
             <Music className="w-6 h-6 text-emerald-500" /> Recommended WMG Tracks
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
@@ -1112,16 +1125,16 @@ const Dashboard = ({ profile }: { profile: UserProfile }) => {
                 whileHover={{ y: -4 }}
                 onClick={() => setSelectedSong(song)}
                 className={`p-4 rounded-3xl border text-left transition-all ${
-                  selectedSong.title === song.title 
-                  ? 'bg-white border-emerald-500 shadow-lg ring-2 ring-emerald-500/20' 
-                  : 'bg-white border-black/5 hover:border-black/10 shadow-sm'
+                  selectedSong.title === song.title
+                  ? 'bg-white/10 backdrop-blur-xl border-emerald-500 shadow-2xl shadow-emerald-500/20 ring-2 ring-emerald-500/20'
+                  : 'bg-white/5 backdrop-blur-xl border-white/10 hover:border-white/20 shadow-xl'
                 }`}
               >
-                <div className="aspect-square bg-zinc-100 rounded-2xl mb-4 overflow-hidden">
+                <div className="aspect-square bg-zinc-800 rounded-2xl mb-4 overflow-hidden">
                   <img src={song.image} alt={song.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
-                <p className="font-bold text-zinc-900 text-sm truncate">{song.title}</p>
-                <p className="text-xs text-zinc-500 truncate">{song.artist}</p>
+                <p className="font-bold text-white text-sm truncate">{song.title}</p>
+                <p className="text-xs text-zinc-400 truncate">{song.artist}</p>
               </motion.button>
             ))}
           </div>
@@ -1135,47 +1148,47 @@ const Dashboard = ({ profile }: { profile: UserProfile }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="mt-12 p-8 bg-white rounded-[40px] border border-black/5 shadow-xl relative overflow-hidden"
+              className="mt-12 p-8 bg-white/5 backdrop-blur-xl rounded-[40px] border border-white/10 shadow-2xl relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-8">
-                <Music className="w-32 h-32 text-zinc-50 opacity-[0.03] rotate-12" />
+                <Music className="w-32 h-32 text-white opacity-[0.03] rotate-12" />
               </div>
-              
+
               <div className="relative z-10">
                 <div className="flex items-center gap-4 mb-8">
-                  <div className={`w-14 h-14 rounded-2xl bg-${activeModuleData.color}-50 flex items-center justify-center`}>
-                    <activeModuleData.icon className={`w-8 h-8 text-${activeModuleData.color}-600`} />
+                  <div className={`w-14 h-14 rounded-2xl bg-${activeModuleData.color}-500/20 flex items-center justify-center`}>
+                    <activeModuleData.icon className={`w-8 h-8 text-${activeModuleData.color}-400`} />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-zinc-900">{activeModuleData.title}</h2>
-                    <p className="text-zinc-500">Active Session • WMG Catalog Integration</p>
+                    <h2 className="text-2xl font-bold text-white">{activeModuleData.title}</h2>
+                    <p className="text-zinc-400">Active Session • WMG Catalog Integration</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                   <div className="space-y-6">
-                    <div className="p-6 bg-zinc-50 rounded-3xl border border-black/5">
-                      <h4 className="font-bold text-zinc-900 mb-4 flex items-center gap-2">
+                    <div className="p-6 bg-white/5 rounded-3xl border border-white/10">
+                      <h4 className="font-bold text-white mb-4 flex items-center gap-2">
                         <Play className="w-4 h-4 fill-current" /> Now Playing
                       </h4>
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 bg-zinc-200 rounded-xl overflow-hidden">
+                        <div className="w-16 h-16 bg-zinc-800 rounded-xl overflow-hidden">
                           <img src={selectedSong.image} alt="Album Art" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                         </div>
                         <div>
-                          <p className="font-bold text-zinc-900">{selectedSong.title}</p>
-                          <p className="text-sm text-zinc-500">{selectedSong.artist} • {selectedSong.album}</p>
+                          <p className="font-bold text-white">{selectedSong.title}</p>
+                          <p className="text-sm text-zinc-400">{selectedSong.artist} • {selectedSong.album}</p>
                         </div>
                       </div>
                       <div className="mt-6 space-y-2">
-                        <div className="h-1 bg-zinc-200 rounded-full overflow-hidden">
-                          <motion.div 
+                        <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                          <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: '45%' }}
                             className={`h-full bg-${activeModuleData.color}-500`}
                           />
                         </div>
-                        <div className="flex justify-between text-[10px] font-mono text-zinc-400">
+                        <div className="flex justify-between text-[10px] font-mono text-zinc-500">
                           <span>01:42</span>
                           <span>03:23</span>
                         </div>
@@ -1183,20 +1196,20 @@ const Dashboard = ({ profile }: { profile: UserProfile }) => {
                     </div>
 
                     <div className="flex gap-4">
-                      <button 
+                      <button
                         onClick={() => setShowExperience(true)}
-                        className={`flex-1 py-4 bg-${activeModuleData.color}-600 text-white rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all`}
+                        className={`flex-1 py-4 bg-${activeModuleData.color}-500 text-white rounded-2xl font-bold shadow-2xl shadow-${activeModuleData.color}-500/20 hover:shadow-${activeModuleData.color}-500/40 transition-all`}
                       >
                         Launch Full Experience
                       </button>
-                      <button className="px-6 py-4 bg-white border border-black/5 rounded-2xl font-bold text-zinc-600 hover:bg-zinc-50 transition-all">
+                      <button className="px-6 py-4 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl font-bold text-zinc-400 hover:bg-white/20 transition-all">
                         <Heart className="w-5 h-5" />
                       </button>
                     </div>
                   </div>
 
                   <div className="space-y-6">
-                    <h4 className="font-bold text-zinc-900 flex items-center gap-2">
+                    <h4 className="font-bold text-white flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-emerald-500" /> AI Adaptations
                     </h4>
                     <div className="space-y-3">
@@ -1205,12 +1218,12 @@ const Dashboard = ({ profile }: { profile: UserProfile }) => {
                         { label: 'Dynamic Range', status: 'Compressed (4:1)', icon: Activity },
                         { label: 'Haptic Mapping', status: 'Synced', icon: Ear },
                       ].map((item, i) => (
-                        <div key={i} className="flex items-center justify-between p-4 bg-white border border-black/5 rounded-2xl">
+                        <div key={i} className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-2xl">
                           <div className="flex items-center gap-3">
-                            <item.icon className="w-4 h-4 text-zinc-400" />
-                            <span className="text-sm font-medium text-zinc-700">{item.label}</span>
+                            <item.icon className="w-4 h-4 text-zinc-500" />
+                            <span className="text-sm font-medium text-zinc-300">{item.label}</span>
                           </div>
-                          <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">{item.status}</span>
+                          <span className="text-xs font-bold text-emerald-400 bg-emerald-500/20 px-2 py-1 rounded">{item.status}</span>
                         </div>
                       ))}
                     </div>
@@ -1224,29 +1237,29 @@ const Dashboard = ({ profile }: { profile: UserProfile }) => {
 
       <AnimatePresence>
         {showExperience && activeModuleData && (
-          <ModuleExperience 
-            module={activeModuleData} 
-            profile={profile} 
-            onBack={() => setShowExperience(false)} 
+          <ModuleExperience
+            module={activeModuleData}
+            profile={profile}
+            onBack={() => setShowExperience(false)}
             selectedSong={selectedSong}
           />
         )}
       </AnimatePresence>
 
-      <footer className="max-w-7xl mx-auto mt-24 pt-12 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8">
+      <footer className="max-w-7xl mx-auto mt-24 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-zinc-900 rounded-xl flex items-center justify-center">
-            <Music className="text-white w-6 h-6" />
+          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
+            <Music className="text-zinc-900 w-6 h-6" />
           </div>
           <div>
-            <p className="font-bold text-zinc-900">Amplify Access</p>
+            <p className="font-bold text-white">Amplify Access</p>
             <p className="text-xs text-zinc-500">© 2025 Warner Music Group x Presidio</p>
           </div>
         </div>
-        <div className="flex gap-8 text-xs font-bold uppercase tracking-widest text-zinc-400">
-          <a href="#" className="hover:text-zinc-900 transition-colors">Documentation</a>
-          <a href="#" className="hover:text-zinc-900 transition-colors">Privacy</a>
-          <a href="#" className="hover:text-zinc-900 transition-colors">Support</a>
+        <div className="flex gap-8 text-xs font-bold uppercase tracking-widest text-zinc-500">
+          <a href="#" className="hover:text-white transition-colors">Documentation</a>
+          <a href="#" className="hover:text-white transition-colors">Privacy</a>
+          <a href="#" className="hover:text-white transition-colors">Support</a>
         </div>
       </footer>
     </div>
@@ -1263,7 +1276,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F2ED]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       {!onboarded ? (
         <Onboarding onComplete={handleOnboardingComplete} />
       ) : (

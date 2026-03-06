@@ -1,0 +1,5 @@
+{
+  "name": "Amplify Access",
+  "description": "The Accessibility Layer for WMG's Music Ecosystem. AI-powered modules for neurodivergent, Deaf/HoH, blind, and speech therapy needs.",
+  "requestFramePermissions": ["microphone"]
+}
